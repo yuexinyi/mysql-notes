@@ -130,4 +130,55 @@ show engines;
 
 ![1578984702254](C:\Users\岳心怡\AppData\Roaming\Typora\typora-user-images\1578984702254.png)
 
+存储限制：
+MyISAM、BDB、Archive —NO
+Memory、NDB－YES
+InnoDB—64TB
+
+支持事务：BDB、InnoDB
+
+锁的粒度：
+Table：MyISAM、Memory
+Row：InnoDB、Archive、NDB
+Page:BDB
+
+支持树索引：除了Archive
+
+支持哈希索引：Memory、InnoDB、NDB
+
+支持全文搜索索引：MyISAM
+
+支持聚簇索引：InnoDB
+
+支持数据缓存：Memory、InnoDB、NDB
+
+支持索引缓存：MyISAM、Memory、InnoDB、NDB
+
+支持压缩数据：MyISAM、NDB
+
+支持加密数据：全部
+
+存储成本：
+High—InnoDB
+Low—MyISAM、BDB、NDB
+Very Low—Archive
+
+记忆成本：
+High—InnoDB、DBD
+Medium—Memory
+Low—MyISAM、BDB、Archive
+
+批量插入速度：
+VeryHigh—Archive
+High—MyIASM、BDB、NDB
+Low－InnoDB
+
+复制支持：全部
+
+外键支持：InnoDB
+
+查询缓存支持：全部
+
+更新数据字典的统计信息：全部
+
 ### 
