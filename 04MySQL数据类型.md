@@ -162,5 +162,161 @@ float[(m,d)]:m指定显示长度，d指定小数位数，占用空间4个字节
 
    在MySQL中，插入的数值会根据表中的规定进行存储显示；
 
+# 3.字符串类型
 
+## 3.1char类型
+
+语法：
+
+char(L):固定长度字符串，L是可以存储的长度，单位为字符，最大长度值为255
+
+栗子：
+
+1. 创建一个表tt5;
+
+   ```mysql
+   mysql> create table tt5(name char(2));
+   Query OK, 0 rows affected (0.19 sec)
+   ```
+
+2. 插入数据；
+
+   ```mysql
+   mysql> insert into tt5 values('ab');
+   Query OK, 1 row affected (0.01 sec)
+   
+   mysql> insert into tt5 values('中国');
+   Query OK, 1 row affected (0.01 sec)
+   ```
+
+3. 显示表中的数值；
+
+   ```mysql
+   mysql> select * from tt5;
+   +------+
+   | name |
+   +------+
+   | ab   |
+   | 中国 |
+   +------+
+   2 rows in set (0.00 sec)
+   ```
+
+4. 发现规律；
+
+   char(2)表示可以存放两个字符，可以是字母或汉子，但是不能超过2个，最多只能是255；
+
+   ```mysql
+   mysql> create table tt5(name char(256));
+   ERROR 1074 (42000): Column length too big for column 'name' (max = 255); use BLOB or TEXT instead
+   ```
+
+## 3.2varchar类型
+
+语法：
+
+varchar(L):可变长度字符串，L表示字符长度，最大长度65535个字节；
+
+栗子：
+
+1. 创建一个表tt6;
+
+   ```mysql
+   mysql> create table tt6(name varchar(6));
+   Query OK, 0 rows affected (0.09 sec)
+   ```
+
+2. 插入数据；
+
+   ```mysql
+   mysql> insert into tt6 values('hello');
+   Query OK, 1 row affected (0.01 sec)
+   
+   mysql> insert into tt6 values('我爱你，中国');
+   Query OK, 1 row affected (0.01 sec)
+   ```
+
+3. 显示表中的数据；
+
+   ```mysql
+   mysql> select * from tt6;
+   +--------------+
+   | name         |
+   +--------------+
+   | hello        |
+   | 我爱你，中国 |
+   +--------------+
+   2 rows in set (0.00 sec)
+   ```
+
+4. 发现规律；
+
+   varchar长度可以指定为0到65535之间的值，但是有1-3个字节用于记录数据大小，所以说有效字节数为65532.
+
+## 3.3char和varchar比较
+
+如何选择定长或变长字符串？
+
+- 如果数据确定长度都一样，就使用定长(char),比如：身份证，手机号，Md5
+- 如果数据长度有变化，就使用变长(varchar),比如：名字，地址
+- 定长的磁盘空间比较浪费，但是效率高；
+- 变长的磁盘空间比较节省，但是效率低；
+
+# 4.日期和时间类型
+
+常见的日期有以下三种：
+
+- datetime:时间日期格式'yyyy-mm-dd HH:ii:ss'表示范围从1000到9999，占用八字节
+- date:日期'yyyy-mm-dd',占用三字节
+- timestamp:时间戳
+
+栗子：
+
+1. 创建一个表tt7;
+
+   ```mysql
+   mysql> create table tt7(t1 date,t2 datetime,t3 timestamp);
+   Query OK, 0 rows affected (0.15 sec)
+   ```
+
+2. 插入数据；
+
+   ```mysql
+   mysql> insert into tt7(t1,t2) values('1997-7-1','2008-8-8 12:1:1');
+   Query OK, 1 row affected (0.02 sec)
+   ```
+
+3. 更新数据；
+
+   ```mysql
+   mysql> update tt7 set t1='2000-6-1';
+   Query OK, 1 row affected (0.01 sec)
+   Rows matched: 1  Changed: 1  Warnings: 0
+   ```
+
+4. 显示表中数据；
+
+   更新前数据：
+
+   ```mysql
+   mysql> select * from tt7;
+   +------------+---------------------+------+
+   | t1         | t2                  | t3   |
+   +------------+---------------------+------+
+   | 1997-07-01 | 2008-08-08 12:01:01 | NULL |
+   +------------+---------------------+------+
+   1 row in set (0.00 sec)
+   ```
+
+   更新后数据：
+
+   ```mysql
+   mysql> select * from tt7;
+   +------------+---------------------+------+
+   | t1         | t2                  | t3   |
+   +------------+---------------------+------+
+   | 2000-06-01 | 2008-08-08 12:01:01 | NULL |
+   +------------+---------------------+------+
+   1 row in set (0.00 sec)
+   ```
 
