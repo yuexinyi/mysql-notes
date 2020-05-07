@@ -189,6 +189,6 @@ drop、delete、truncate区别：
 
 - 速度：drop>truncate>delete
 - 删除部分数据delete
-- 删除表drop
+- 删除表、数据库drop
 - 保留表删除所有数据，与事务无关truncate
 - 与事务有关，或者触发trigger使用delete
